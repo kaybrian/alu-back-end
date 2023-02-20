@@ -23,6 +23,9 @@ if __name__ == "__main__":
     ).json()
 
     with open(str(USER_ID)+".csv", "w", encoding="utf8") as file:
+        """
+            the main module that creates and writes the info in the csv file
+        """
         for task in USER_TASKS:
             file.write('"' + str(USER_ID) + '"' +
                        "," + '"' + str(USER["username"]) + '"' +
