@@ -1,13 +1,12 @@
 #!/usr/bin/python3
 """
-python script that returns TODO list progress for a given employee ID
-and saves that information in a csv file
+    python script that exports data in the CSV format
 """
-
 import csv
+import json
 import requests
 import sys
-import json
+
 
 if __name__ == "__main__":
     USER_ID = sys.argv[1]
