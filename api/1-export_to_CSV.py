@@ -11,6 +11,9 @@ import sys
 import json
 
 if __name__ == "__main__":
+    """
+        main module wuth the logic
+    """
     USER_ID = sys.argv[1]
     USER = requests.request(
         "GET", f'https://jsonplaceholder.typicode.com/users/{USER_ID}/'
