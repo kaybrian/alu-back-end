@@ -1,27 +1,50 @@
 #!/usr/bin/python3
 """"Module"""
 
+import csv
 import json
 import requests
-import sys
+from sys import argv
 
-if __name__ == '__main__':
-    employee_id = sys.argv[1]
-    user_url = "https://jsonplaceholder.typicode.com/users/{}" \
-        .format(employee_id)
-    todos_url = "https://jsonplaceholder.typicode.com/users/{}/todos/" \
-        .format(employee_id)
 
-    user_info = requests.request('GET', user_url).json()
-    todos_info = requests.request('GET', todos_url).json()
+if __name__ == "__main__":
+    """
+        request user info by employee ID
+    """
+    request_employee = requests.get(
+        'https://jsonplaceholder.typicode.com/users/{}/'.format(argv[1]))
+    """
+        convert json to dictionary
+    """
+    user = json.loads(request_employee.text)
+    """
+        extract username
+    """
+    username = user.get("username")
 
-    employee_username = user_info["username"]
+    """
+        request user's TODO list
+    """
+    request_todos = requests.get(
+        'https://jsonplaceholder.typicode.com/users/{}/todos'.format(argv[1]))
+    """
+        dictionary to store task status(completed) in boolean format
+    """
+    tasks = {}
+    """
+        convert json to list of dictionaries
+    """
+    user_todos = json.loads(request_todos.text)
+    """
+        loop through dictionary & get completed tasks
+    """
+    for dictionary in user_todos:
+        tasks.update({dictionary.get("title"): dictionary.get("completed")})
 
-    todos_info_sorted = [
-        dict(zip(["task", "completed", "username"],
-                 [task["title"], task["completed"], employee_username]))
-        for task in todos_info]
-
-    user_dict = {str(employee_id): todos_info_sorted}
-    with open(str(employee_id) + '.json', "w") as file:
-        file.write(json.dumps(user_dict))
+    """
+        export to CSV
+    """
+    with open('{}.csv'.format(argv[1]), mode='w') as file:
+        file_editor = csv.writer(file, delimiter=',', quoting=csv.QUOTE_ALL)
+        for k, v in tasks.items():
+            file_editor.writerow([argv[1], username, v, k])
