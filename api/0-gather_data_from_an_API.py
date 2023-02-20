@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-"""Module"""
+""" Module """
 
 import requests
 import sys
 
 # bdjdkbdhdbsjdke
-"""Module"""
+""" Module """
 
 if __name__ == '__main__':
     user_id = sys.argv[1]
