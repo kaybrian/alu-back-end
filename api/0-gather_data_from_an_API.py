@@ -1,13 +1,13 @@
 #!/usr/bin/python3
+"""Module"""
 
 import requests
 import sys
 
 
-"""A module to handle users and their todos in a day"""
+"""Module"""
 
 if __name__ == '__main__':
-    """"The main function that is called when the file runs"""
     user_id = sys.argv[1]
     user = requests.request(
         'GET', f'https://jsonplaceholder.typicode.com/users/{user_id}').json()
